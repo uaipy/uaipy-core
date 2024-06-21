@@ -1,0 +1,11 @@
+{
+  "name": "uaipy-core",
+  "version": "1.0.0",
+  "description": "UAIpy Core is a serverless project designed to streamline and optimize core functionalities for efficient and scalable application development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "uaipy team",
+  "license": "MIT"
+}
