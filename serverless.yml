@@ -1,0 +1,50 @@
+service: uaipy-core
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, "local"}
+  environment: ${file(./config/environments/env.${self:provider.stage}.json)}
+  apiGateway:
+    apiKeys:
+      - device:
+          - deviceApiKey
+      - client:
+          - clientApiKey
+    usagePlan:
+      - device:
+          quota:
+            limit: 5000
+            offset: 2
+            period: MONTH
+          throttle:
+            burstLimit: 200
+            rateLimit: 100
+      - client:
+          quota:
+            limit: 5000
+            offset: 2
+            period: MONTH
+          throttle:
+            burstLimit: 200
+            rateLimit: 100
+plugins:
+  - serverless-offline
+  
+functions:
+  hello:
+    handler: src/functions/hello.handler
+    events:
+      - http:
+          path: hello
+          method: get
+          private: true
+          cors: false
+  webhook:
+    handler: src/functions/webhook.handler
+    events:
+      - http:
+          path: webhook
+          method: post
+          private: true
+          cors: false
