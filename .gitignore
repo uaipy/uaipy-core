@@ -1,0 +1,6 @@
+node_modules
+.serverless
+config/environments/env.dev.json
+config/environments/env.local.json
+package-lock.json
+.build

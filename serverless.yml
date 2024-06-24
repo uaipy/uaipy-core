@@ -29,7 +29,11 @@ provider:
             burstLimit: 200
             rateLimit: 100
 plugins:
+  - serverless-plugin-typescript
   - serverless-offline
+
+build:
+  esbuild: false
   
 functions:
   hello:
@@ -38,13 +42,5 @@ functions:
       - http:
           path: hello
           method: get
-          private: true
-          cors: false
-  webhook:
-    handler: src/functions/webhook.handler
-    events:
-      - http:
-          path: webhook
-          method: post
           private: true
           cors: false
