@@ -1,5 +1,5 @@
 -- Create User Table
-CREATE TABLE user (
+CREATE TABLE "user" (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE user (
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL, 
     deleted_at TIMESTAMP, 
-    active boolean NOT NULL,
+    active boolean NOT NULL
 );
 
 -- Create Orquestrator Table
@@ -23,7 +23,7 @@ CREATE TABLE orquestrator (
     updated_at TIMESTAMP NOT NULL, 
     deleted_at TIMESTAMP, 
     active boolean NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE
 );
 
 -- Create Device Table
