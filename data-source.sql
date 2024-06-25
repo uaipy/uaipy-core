@@ -4,19 +4,21 @@ CREATE TABLE user (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
+    details JSONB NOT NULL,
+    uuid UUID NOT NULL,
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL, 
     deleted_at TIMESTAMP, 
     active boolean NOT NULL,
-
 );
 
 -- Create Orquestrator Table
 CREATE TABLE orquestrator (
     id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
-    user_id INTEGER NOT NULL,
+    uuid UUID NOT NULL,
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL, 
     deleted_at TIMESTAMP, 
@@ -27,9 +29,9 @@ CREATE TABLE orquestrator (
 -- Create Device Table
 CREATE TABLE device (
     id SERIAL PRIMARY KEY,
+    orquestrator_id INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
     type VARCHAR(100),
-    orquestrator_id INTEGER NOT NULL,
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL, 
     deleted_at TIMESTAMP, 
