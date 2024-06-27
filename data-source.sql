@@ -51,3 +51,36 @@ CREATE TABLE message (
     active boolean NOT NULL,
     FOREIGN KEY (device_id) REFERENCES device(id) ON DELETE CASCADE
 );
+
+-- Insert User Into User Table
+INSERT INTO
+  "user" (
+    name,
+    email,
+    password,
+    details,
+    uuid,
+    created_at,
+    updated_at,
+    deleted_at,
+    active
+  )
+VALUES
+  (
+    'John Doe',
+    'john.doe@example.com',
+    'securepassword',
+    '{"age": 30, "country": "USA"}',
+    gen_random_uuid (),
+    NOW(),
+    NOW(),
+    NULL,
+    true
+  );
+
+-- Select all Users from User Table
+
+select
+  *
+from
+  "user"
