@@ -1,4 +1,4 @@
-import User from "src/domain/model/user";
+import User from "../../../domain/model/user";
 
 export interface UserDataSource {
   create(contact: User): Promise<User>;

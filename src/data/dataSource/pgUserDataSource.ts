@@ -1,11 +1,10 @@
-import User from "src/domain/model/user";
+import User from "../../domain/model/user";
 import { UserDataSource } from "../interface/data-source/userDataSource";
 import { SQLDatabaseWrapper } from "../interface/sqlDatabaseWrapper";
 
-
 export default class PGUserDataSource implements UserDataSource {
   private db: SQLDatabaseWrapper;
-  private DB_TABLE = "user";
+  private DB_TABLE = "public.tb_user";
 
   constructor(db: SQLDatabaseWrapper) {
     this.db = db;
@@ -20,8 +19,8 @@ export default class PGUserDataSource implements UserDataSource {
       item.uuid,
       item.created_at,
       item.updated_at,
-      item.deleted_at,
       item.active,
+      item.deleted_at,
       item.id
     );
   };
@@ -37,8 +36,8 @@ export default class PGUserDataSource implements UserDataSource {
           item.uuid,
           item.created_at,
           item.updated_at,
-          item.deleted_at,
           item.active,
+          item.deleted_at,
           item.id
         )
     );
@@ -64,9 +63,8 @@ export default class PGUserDataSource implements UserDataSource {
   }
 
   async getAll(): Promise<User[]> {
-    const dbResponse = await this.db.query(
-      `select * from ${this.DB_TABLE} where active = true ORDER BY created_at DESC;`
-    );
+    const dbResponse = await this.db.query(`select * from ${this.DB_TABLE};`);
+    console.log(dbResponse.rows);
     return this.adaptBatchToDomain(dbResponse.rows);
   }
 }

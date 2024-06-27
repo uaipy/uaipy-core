@@ -38,19 +38,14 @@ build:
 
   
 functions:
-  # hello:
-  #   handler: src/functions/hello.handler
-  #   events:
-  #     - http:
-  #         path: hello
-  #         method: get
-  #         private: true
-  #         cors: false
-  getUser:
-    handler: src/functions/userFunction.userHandler
+  getUsers:
+    handler: src/functions/userFunction.getUserHandler
+
+  createUser:
+    handler: src/functions/userFunction.createUserHandler
     events:
       - http:
           path: user
-          method: get
+          method: POST
           private: true
           cors: false

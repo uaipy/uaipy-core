@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { generateUuid } from "../../utils/uuid";
 
 export default class User {
   private id?: number;
@@ -48,7 +48,7 @@ export default class User {
       email,
       password,
       details,
-      uuidv4(),
+      generateUuid(),
       new Date(),
       new Date(),
       active,
