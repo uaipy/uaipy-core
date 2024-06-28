@@ -4,16 +4,20 @@
   "description": "UAIpy Core is a serverless project designed to streamline and optimize core functionalities for efficient and scalable application development.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "deploy:dev": "sls deploy --stage=dev"
   },
   "author": "uaipy team",
   "license": "MIT",
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
     "@types/pg": "^8.11.6",
     "@types/uuid": "^10.0.0",
+    "jest": "^29.7.0",
     "serverless-offline": "^13.6.0",
     "serverless-plugin-typescript": "^2.1.5",
+    "ts-jest": "^29.1.5",
     "typescript": "^5.5.2"
   },
   "dependencies": {

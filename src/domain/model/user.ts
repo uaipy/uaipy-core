@@ -1,7 +1,6 @@
 import { generateUuid } from "../../utils/uuid";
 
 export default class User {
-  private id?: number;
   private name: string;
   private email: string;
   private password: string;
@@ -9,8 +8,9 @@ export default class User {
   private uuid: string;
   private createdAt: Date;
   private updatedAt: Date;
-  private deletedAt?: Date;
   private active: boolean;
+  private deletedAt?: Date;
+  private id?: number;
 
   constructor(
     name: string,
