@@ -34,13 +34,18 @@ plugins:
 
 build:
   esbuild: false
+
+
   
 functions:
-  hello:
-    handler: src/functions/hello.handler
+  getUsers:
+    handler: src/functions/userFunction.getUserHandler
+
+  createUser:
+    handler: src/functions/userFunction.createUserHandler
     events:
       - http:
-          path: hello
-          method: get
+          path: user
+          method: POST
           private: true
           cors: false
