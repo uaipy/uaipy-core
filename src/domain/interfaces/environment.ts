@@ -4,4 +4,5 @@ export interface EnvironmentValues {
   DB_HOST: string;
   DB_NAME: string;
   DB_PASSWORD: string;
+  PASSWORD_SALT: number;
 }

@@ -9,7 +9,7 @@ describe('Email', () => {
         'user.name+tag+sorting@example.com',
         'user.name@example.co.uk',
         'user_name@example.org',
-        'username@example.net',
+        'username@example.net.asd',
       ];
 
       validEmails.forEach(email => {

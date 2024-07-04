@@ -35,17 +35,24 @@ plugins:
 build:
   esbuild: false
 
-
-  
 functions:
   getUsers:
-    handler: src/functions/userFunction.getUserHandler
+    handler: src/infra/functions/user/getUsersFunction.handler
 
   createUser:
-    handler: src/functions/userFunction.createUserHandler
+    handler: src/infra/functions/user/createUserFunction.handler
     events:
       - http:
           path: user
           method: POST
+          private: true
+          cors: false
+
+  hello:
+    handler: src/infra/functions/helloFunction.handler
+    events:
+      - http:
+          path: hello
+          method: GET
           private: true
           cors: false

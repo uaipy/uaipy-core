@@ -1,5 +1,5 @@
 import  * as env  from "env-var";
-import { EnvironmentValues } from "src/domain/interfaces/environment";
+import { EnvironmentValues } from "../../src/domain/interfaces/environment";
 
 export default class Environment {
 
@@ -12,6 +12,7 @@ export default class Environment {
             DB_HOST: env.get("DB_HOST").asString() || '',
             DB_NAME: env.get("DB_NAME").asString() || '',
             DB_PASSWORD: env.get("DB_PASSWORD").asString() || '',
+            PASSWORD_SALT: env.get("PASSWORD_SALT").asIntPositive() || 0,
         }
     };
 }

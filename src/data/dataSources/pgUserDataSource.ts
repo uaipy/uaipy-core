@@ -1,6 +1,6 @@
 import User from "../../domain/model/user";
-import { UserDataSource } from "../interface/data-source/userDataSource";
-import { SQLDatabaseWrapper } from "../interface/sqlDatabaseWrapper";
+import { UserDataSource } from "../interfaces/dataSources/userDataSource";
+import { SQLDatabaseWrapper } from "../interfaces/sqlDatabaseWrapper";
 
 export default class PGUserDataSource implements UserDataSource {
   private db: SQLDatabaseWrapper;
