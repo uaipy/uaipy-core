@@ -10,17 +10,9 @@ import Environment from "../../../utils/environment";
 import PGUserDataSource from "../../../data/dataSources/pgUserDataSource";
 import CreateUserUseCase from "../../../service/createUser";
 import CreateUserController from "../../../presentation/createUserController";
+import { makeSQLDatabaseWrapper } from "../../../infra/factories/dataSourceFactory";
 
-const db = new Pool({
-  user: Environment.getValues().DB_USER,
-  host: Environment.getValues().DB_HOST,
-  database: Environment.getValues().DB_NAME,
-  password: Environment.getValues().DB_PASSWORD,
-  port: 5432,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const db = makeSQLDatabaseWrapper();
 const repository = new PGUserDataSource(db);
 const service = new CreateUserUseCase(repository);
 const controller = new CreateUserController(service);
@@ -30,5 +22,5 @@ export const handler: Handler = async (
   event: APIGatewayProxyEventV2,
   context: Context
 ): Promise<APIGatewayProxyResult> => {
-  return controller.handler(event, context)
+  return controller.handler(event, context);
 };

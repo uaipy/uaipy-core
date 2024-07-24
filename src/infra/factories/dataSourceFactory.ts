@@ -2,7 +2,7 @@ import { Pool } from "pg";
 import Environment from "../../utils/environment";
 import { SQLDatabaseWrapper } from "src/data/interfaces/sqlDatabaseWrapper";
 
-export const  =  (): SQLDatabaseWrapper => {
+export const makeSQLDatabaseWrapper =  (): SQLDatabaseWrapper => {
     return new Pool({
         user: Environment.getValues().DB_USER,
         host: Environment.getValues().DB_HOST,

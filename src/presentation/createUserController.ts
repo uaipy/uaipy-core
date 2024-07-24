@@ -9,6 +9,7 @@ import CreateUser from "../domain/interfaces/useCases/user";
 import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
 import HttpHandler from "../utils/http";
+import ErrorCode from "../utils/errors/error";
 
 export default class CreateUserController implements Controller {
   constructor(private readonly service: CreateUser) {}
@@ -25,12 +26,11 @@ export default class CreateUserController implements Controller {
         password: requestData.password,
         details: JSON.stringify(requestData.details),
       });
-      return HttpHandler.created(
-        {
-          stage: Environment.getValues().NODE_ENV,
-          user,
-        }
-      );
+
+      return HttpHandler.created({
+        stage: Environment.getValues().NODE_ENV,
+        user,
+      });
     } catch (err: any) {
       console.error(err);
       return HttpHandler.handleError(err);

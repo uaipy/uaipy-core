@@ -3,10 +3,11 @@ import {
   APIGatewayProxyResult,
   Context,
 } from "aws-lambda";
+import { HttpResponse } from "./http";
 
 export default interface Controller {
   handler(
     event: APIGatewayProxyEventV2,
-    context: Context
-  ): Promise<APIGatewayProxyResult>;
+    _context: Context
+  ): Promise<HttpResponse> 
 }
