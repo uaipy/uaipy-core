@@ -13,6 +13,8 @@ export default class Environment {
             DB_NAME: env.get("DB_NAME").asString() || '',
             DB_PASSWORD: env.get("DB_PASSWORD").asString() || '',
             PASSWORD_SALT: env.get("PASSWORD_SALT").asIntPositive() || 0,
+            TOKEN_SECRET_KEY: env.get("TOKEN_SECRET_KEY").asString() || '',
+            TOKEN_EXPIRATION: env.get("TOKEN_EXPIRATION").asString() || '',
         }
     };
 }

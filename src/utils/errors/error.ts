@@ -6,19 +6,19 @@ export default class ErrorCode {
   static INVALID_ACCESS_TOKEN: Error = new BaseError(
     ErrorType.FORBIDDEN,
     "AUTH-001",
-    "Access Denied: Invalid Access Token"
+    "Access refused. You don't have permission to access the requested resource."
   );
 
   static ACCESS_TOKEN_NOT_FOUND: Error = new BaseError(
     ErrorType.UNAUTHRORIZED,
     "AUTH-002",
-    "Access Denied: Authorization Token Not Found"
+    "Invalid Access Token. Verify your request and try again."
   );
 
   static INTERNAL_SERVER_ERROR: Error = new BaseError(
     ErrorType.INTERNAL,
     "INTERNAL-SERVER-ERROR",
-    "Unexpected thig happen"
+    "An Unexpected Error Happened"
   );
 
   static INVALID_EMAIL(email: string): Error {

@@ -56,3 +56,21 @@ functions:
           method: GET
           private: true
           cors: false
+  
+  auth:
+    handler: src/infra/functions/authFunction.handler
+    events:
+      - http:
+          path: auth
+          method: POST
+          private: true
+          cors: false
+
+  authVerifier:
+    handler: src/infra/functions/authVerifier.handler
+    events:
+      - http:
+          path: auth/verifier
+          method: POST
+          private: true
+          cors: false
