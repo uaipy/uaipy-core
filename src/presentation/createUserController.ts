@@ -5,9 +5,10 @@ import {
   Handler,
 } from "aws-lambda";
 import Environment from "../utils/environment";
-import User from "../domain/model/user";
 import CreateUser from "../domain/interfaces/useCases/user";
 import Controller from "../domain/interfaces/controller";
+import { HttpResponse } from "../domain/interfaces/http";
+import HttpHandler from "../utils/http";
 
 export default class CreateUserController implements Controller {
   constructor(private readonly service: CreateUser) {}
@@ -15,7 +16,7 @@ export default class CreateUserController implements Controller {
   async handler(
     event: APIGatewayProxyEventV2,
     _context: Context
-  ): Promise<APIGatewayProxyResult> {
+  ): Promise<HttpResponse> {
     try {
       const requestData: any = JSON.parse(event.body || "");
       const user = await this.service.execute({
@@ -24,21 +25,15 @@ export default class CreateUserController implements Controller {
         password: requestData.password,
         details: JSON.stringify(requestData.details),
       });
-      return {
-        statusCode: 201,
-        body: JSON.stringify({
+      return HttpHandler.created(
+        {
           stage: Environment.getValues().NODE_ENV,
           user,
-        }),
-      };
+        }
+      );
     } catch (err: any) {
       console.error(err);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          message: "Internal Server Error",
-        }),
-      };
+      return HttpHandler.handleError(err);
     }
   }
 }
