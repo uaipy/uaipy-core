@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "start:local": "sls offline",
     "deploy:dev": "sls deploy --stage=dev"
   },
   "author": "uaipy team",

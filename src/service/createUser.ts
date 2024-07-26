@@ -13,8 +13,7 @@ export default class CreateUserUseCase implements CreateUser {
   async execute(params: CreateUserInput): Promise<CreateUserOutput> {
     this.checkEmail(params.email);
     this.checkPassword(params.password);
-    const saltRounds = Environment.getValues().PASSWORD_SALT;
-    params.password = await Password.encryptPassword(params.password, saltRounds);
+    params.password = await Password.encryptPassword(params.password);
     const createdUser = await this.createUser(params);
     console.log(createdUser);
     return {
