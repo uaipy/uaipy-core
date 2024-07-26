@@ -6,13 +6,15 @@ import CreateUser, {
 import { UserDataSource } from "../data/interfaces/dataSources/userDataSource";
 import Email from "../domain/model/email";
 import Password from "../domain/model/password";
+import Environment from "../utils/environment";
 
 export default class CreateUserUseCase implements CreateUser {
   constructor(private readonly repository: UserDataSource) {}
   async execute(params: CreateUserInput): Promise<CreateUserOutput> {
     this.checkEmail(params.email);
     this.checkPassword(params.password);
-    params.password = await Password.encryptPassword(params.password);
+    const saltRounds = Environment.getValues().PASSWORD_SALT;
+    params.password = await Password.encryptPassword(params.password, saltRounds);
     const createdUser = await this.createUser(params);
     console.log(createdUser);
     return {

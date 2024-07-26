@@ -15,10 +15,10 @@ export default class ErrorCode {
     "Invalid Access Token. Verify your request and try again."
   );
 
-  static INTERNAL_SERVER_ERROR: Error = new BaseError(
+  static GENERIC_ERROR: Error = new BaseError(
     ErrorType.INTERNAL,
     "INTERNAL-SERVER-ERROR",
-    "An Unexpected Error Happened"
+    "An Unexpected Error Happened. Please try again later."
   );
 
   static INVALID_EMAIL(email: string): Error {
@@ -28,4 +28,10 @@ export default class ErrorCode {
       `Email ${email} is invalid`
     );
   }
+
+  static INVALID_PASSWORD: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "INVALID-REQUEST-002",
+    `Invalid Password`
+  );
 }

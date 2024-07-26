@@ -27,7 +27,7 @@ export default class Token {
   }
 }
 
-interface TokenPayload {
+export interface TokenPayload {
   userId: string;
   email: string;
 }

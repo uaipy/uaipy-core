@@ -5,8 +5,8 @@ export default class Password {
   constructor() {}
 
   static encryptPassword = async (password: string): Promise<string> => {
-    const saltRounds = Environment.getValues().PASSWORD_SALT;
-    const salt = await bcrypt.genSalt(saltRounds);
+    const environment = Environment.getValues();
+    const salt = await bcrypt.genSalt(environment.PASSWORD_SALT);
     const hash = await bcrypt.hash(password, salt);
     return hash;
   };
