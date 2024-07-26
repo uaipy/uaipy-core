@@ -12,11 +12,11 @@ console.log("Create New Lambda");
 
 export const handler: Handler = async (
   event: APIGatewayProxyEventV2,
-  _context: Context
+  context: Context
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const requestData: any = JSON.parse(event.body || "");
-    const token = Token.verify(requestData.token);
+    console.log(event, context)
+    const token = Token.verify(event.headers.Authorization || '');
     return HttpHandler.ok({
       stage: Environment.getValues().NODE_ENV,
       token,
