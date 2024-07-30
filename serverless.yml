@@ -34,13 +34,43 @@ plugins:
 
 build:
   esbuild: false
-  
+
 functions:
-  hello:
-    handler: src/functions/hello.handler
+  authVerifierFunction:
+    handler: src/infra/functions/authVerifier.handler
+
+  getUsersFunction:
+    handler: src/infra/functions/user/getUsersFunction.handler
+
+  createUserFunction:
+    handler: src/infra/functions/user/createUserFunction.handler
     events:
       - http:
+          path: user
+          method: POST
+          private: true
+          cors: false
+
+  privateClientFunction:
+    handler: src/infra/functions/helloFunction.handler
+    events:
+      - http:
+          private: true
           path: hello
-          method: get
+          method: GET
+          cors: false
+          authorizers:
+            customAuthorizer:
+              functionName: authVerifierFunction
+              type: request
+              identitySource:
+                - $request.header.Authorization
+
+  authFunction:
+    handler: src/infra/functions/authFunction.handler
+    events:
+      - http:
+          path: auth
+          method: POST
           private: true
           cors: false
