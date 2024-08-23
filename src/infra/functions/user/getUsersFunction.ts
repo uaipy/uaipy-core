@@ -4,20 +4,11 @@ import {
   Context,
   Handler,
 } from "aws-lambda";
-import { Pool } from "pg";
 import Environment from "../../../utils/environment";
 import PGUserDataSource from "../../../data/dataSources/pgUserDataSource";
+import { makeSQLDatabaseWrapper } from "../../../infra/factories/dataSourceFactory";
 
-const db = new Pool({
-  user: Environment.getValues().DB_USER,
-  host: Environment.getValues().DB_HOST,
-  database: Environment.getValues().DB_NAME,
-  password: Environment.getValues().DB_PASSWORD,
-  port: 5432,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const db = makeSQLDatabaseWrapper();
 const repository = new PGUserDataSource(db);
 console.log("Create New Lambda");
 

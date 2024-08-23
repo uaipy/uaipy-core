@@ -21,17 +21,35 @@ export default class ErrorCode {
     "An Unexpected Error Happened. Please try again later."
   );
 
+  static INVALID_REQUEST: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "INVALID-REQUEST-001",
+    `One property is missing on request payload`
+  );
+
   static INVALID_EMAIL(email: string): Error {
     return new BaseError(
       ErrorType.BUSINESS,
-      "INVALID-REQUEST-001",
+      "INVALID-REQUEST-002",
       `Email ${email} is invalid`
     );
   }
 
   static INVALID_PASSWORD: Error = new BaseError(
     ErrorType.BUSINESS,
-    "INVALID-REQUEST-002",
+    "INVALID-REQUEST-003",
     `Invalid Password`
+  );
+
+  static USER_NOT_FOUND_BY_EMAIL: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "USER-NOT-FOUND-001",
+    `the specified user email provided was not found`
+  );
+
+  static USER_NOT_FOUND_BY_UUID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "USER-NOT-FOUND-002",
+    `the specified user uuid provided was not found`
   );
 }
