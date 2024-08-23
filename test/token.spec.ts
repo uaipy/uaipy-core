@@ -6,7 +6,7 @@ import ErrorCode from "../src/utils/errors/error";
 import { mockEnvironment } from "./mocks/environment";
 
 describe("Token Class", () => {
-  const payload: UserTokenPayload = { userId: "123", email: "test@example.com" };
+  const payload: UserTokenPayload = { userUuid: "123", email: "test@example.com" };
   const secretKey = mockEnvironment.TOKEN_SECRET_KEY;
 
   beforeAll(() => {
@@ -24,14 +24,14 @@ describe("Token Class", () => {
 
     // Decode the token to verify its contents
     const decoded = jwt.verify(token, secretKey) as UserTokenPayload;
-    expect(decoded.userId).toBe(payload.userId);
+    expect(decoded.userUuid).toBe(payload.userUuid);
     expect(decoded.email).toBe(payload.email);
   });
 
   it("should verify a token correctly", () => {
     const token = Token.sign(payload);
     const decoded = Token.verifyUser(token);
-    expect(decoded.userId).toBe(payload.userId);
+    expect(decoded.userUuid).toBe(payload.userUuid);
     expect(decoded.email).toBe(payload.email);
   });
 
