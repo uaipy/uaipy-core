@@ -1,12 +1,13 @@
 import User from "../domain/model/user";
-import CreateUser, {
+import {
+  CreateUser,
   CreateUserInput,
   CreateUserOutput,
 } from "../domain/interfaces/useCases/user";
 import { UserDataSource } from "../data/interfaces/dataSources/userDataSource";
 import Email from "../domain/model/email";
 import Password from "../domain/model/password";
-import Environment from "../utils/environment";
+import ErrorCode from "../utils/errors/error";
 
 export default class CreateUserUseCase implements CreateUser {
   constructor(private readonly repository: UserDataSource) {}
@@ -25,18 +26,17 @@ export default class CreateUserUseCase implements CreateUser {
   private checkEmail(email: string) {
     const isEmailValid = Email.validate(email);
     if (!isEmailValid) {
-      throw new Error("invalid email");
+      throw ErrorCode.INVALID_EMAIL(email);
     }
   }
 
   private checkPassword(password: string) {
     const isPasswordValid = Password.verifyPassword(password);
     if (!isPasswordValid) {
-      throw new Error("invalid password");
+      throw ErrorCode.INVALID_PASSWORD;
     }
   }
 
-  
   private async createUser(params: CreateUserInput): Promise<User> {
     const user = User.create(
       params.name,

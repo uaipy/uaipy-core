@@ -48,7 +48,7 @@ functions:
           private: true
           cors: false
 
-  helloFunctionFunction:
+  helloFunction:
     handler: src/infra/functions/helloFunction.handler
     events:
       - http:
@@ -57,11 +57,11 @@ functions:
           method: GET
           cors: false
           
-  authFunction:
-    handler: src/infra/functions/authFunction.handler
+  userAuthFunction:
+    handler: src/infra/functions/userAuthFunction.handler
     events:
       - http:
-          path: auth
+          path: user/auth
           method: POST
           private: true
           cors: false

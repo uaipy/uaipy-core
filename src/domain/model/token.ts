@@ -28,6 +28,6 @@ export default class Token {
 }
 
 export interface UserTokenPayload {
-  userId: string;
+  userUuid: string;
   email: string;
 }

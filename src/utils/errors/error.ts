@@ -40,4 +40,16 @@ export default class ErrorCode {
     "INVALID-REQUEST-003",
     `Invalid Password`
   );
+
+  static USER_NOT_FOUND_BY_EMAIL: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "USER-NOT-FOUND-001",
+    `the specified user email provided was not found`
+  );
+
+  static USER_NOT_FOUND_BY_UUID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "USER-NOT-FOUND-002",
+    `the specified user uuid provided was not found`
+  );
 }

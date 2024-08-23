@@ -1,5 +1,12 @@
-export default interface CreateUser {
+import User from "../../model/user";
+
+export interface CreateUser {
   execute(params: CreateUserInput): Promise<CreateUserOutput>;
+}
+
+export interface CheckUserExistence {
+  checkByEmail(email: string): Promise<User>;
+  checkByUuid(uuid: string): Promise<User>;
 }
 
 export type CreateUserInput = {
