@@ -12,10 +12,10 @@ import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
 import HttpHandler from "../utils/http";
 import ErrorCode from "../utils/errors/error";
-import PrivateController from "./privateController";
+import UserPrivateController from "./privateController";
 
 export default class CreateUserController
-  extends PrivateController
+  extends UserPrivateController
   implements Controller
 {
   constructor(private readonly service: CreateUser) {

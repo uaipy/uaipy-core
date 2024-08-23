@@ -5,7 +5,7 @@ import ErrorCode from "../../utils/errors/error";
 export default class Token {
   constructor() {}
 
-  static sign(payload: TokenPayload): string {
+  static sign(payload: UserTokenPayload): string {
     const environment = Environment.getValues();
     const options: SignOptions = {
       expiresIn: environment.TOKEN_EXPIRATION,
@@ -13,12 +13,12 @@ export default class Token {
     return jwt.sign(payload, environment.TOKEN_SECRET_KEY, options);
   }
 
-  static verify(token: string): TokenPayload {
+  static verifyUser(token: string): UserTokenPayload {
     try {
       const decoded = jwt.verify(
         token,
         Environment.getValues().TOKEN_SECRET_KEY
-      ) as TokenPayload;
+      ) as UserTokenPayload;
       return decoded;
     } catch (error: any) {
       console.error("Token verification failed:", error);
@@ -27,7 +27,7 @@ export default class Token {
   }
 }
 
-export interface TokenPayload {
+export interface UserTokenPayload {
   userId: string;
   email: string;
 }
