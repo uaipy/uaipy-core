@@ -36,9 +36,6 @@ build:
   esbuild: false
 
 functions:
-  authVerifierFunction:
-    handler: src/infra/functions/authVerifier.handler
-
   getUsersFunction:
     handler: src/infra/functions/user/getUsersFunction.handler
 
@@ -51,7 +48,7 @@ functions:
           private: true
           cors: false
 
-  privateClientFunction:
+  helloFunctionFunction:
     handler: src/infra/functions/helloFunction.handler
     events:
       - http:
@@ -59,13 +56,7 @@ functions:
           path: hello
           method: GET
           cors: false
-          authorizers:
-            customAuthorizer:
-              functionName: authVerifierFunction
-              type: request
-              identitySource:
-                - $request.header.Authorization
-
+          
   authFunction:
     handler: src/infra/functions/authFunction.handler
     events:

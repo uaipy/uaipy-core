@@ -5,27 +5,35 @@ import {
   Handler,
 } from "aws-lambda";
 import Environment from "../utils/environment";
-import CreateUser from "../domain/interfaces/useCases/user";
+import CreateUser, {
+  CreateUserInput,
+} from "../domain/interfaces/useCases/user";
 import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
 import HttpHandler from "../utils/http";
 import ErrorCode from "../utils/errors/error";
+import PrivateController from "./privateController";
 
-export default class CreateUserController implements Controller {
-  constructor(private readonly service: CreateUser) {}
+export default class CreateUserController
+  extends PrivateController
+  implements Controller
+{
+  constructor(private readonly service: CreateUser) {
+    super();
+  }
 
   async handler(
     event: APIGatewayProxyEventV2,
     _context: Context
   ): Promise<HttpResponse> {
     try {
-      const requestData: any = JSON.parse(event.body || "");
-      const user = await this.service.execute({
-        name: requestData.name,
-        email: requestData.email,
-        password: requestData.password,
-        details: JSON.stringify(requestData.details),
-      });
+      super.validateAuthToken(event.headers.Authorization || "");
+
+      const requestData: CreateUserInput = this.validateRequest(
+        JSON.parse(event.body || "")
+      );
+
+      const user = await this.service.execute(requestData);
 
       return HttpHandler.created({
         stage: Environment.getValues().NODE_ENV,
@@ -35,5 +43,19 @@ export default class CreateUserController implements Controller {
       console.error(err);
       return HttpHandler.handleError(err);
     }
+  }
+
+  private validateRequest(requestData: any): CreateUserInput {
+    const isValidRequest =
+      requestData.name && requestData.email && requestData.password;
+    if (!isValidRequest) {
+      throw ErrorCode.INVALID_REQUEST;
+    }
+    return {
+      name: requestData.name,
+      email: requestData.email,
+      password: requestData.password,
+      details: JSON.stringify(requestData.details),
+    };
   }
 }
