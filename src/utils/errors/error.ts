@@ -52,4 +52,16 @@ export default class ErrorCode {
     "USER-NOT-FOUND-002",
     `the specified user uuid provided was not found`
   );
+
+  static USER_NOT_FOUND_BY_ID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "USER-NOT-FOUND-003",
+    `the specified user ID provided was not found`
+  );
+
+  static ORQUESTRATOR_NOT_FOUND_BY_UUID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "ORQUESTRATOR-NOT-FOUND-004",
+    `the specified orqueestrator ID provided was not found`
+  );
 }

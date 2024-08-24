@@ -65,3 +65,12 @@ functions:
           method: POST
           private: true
           cors: false
+
+  createOrquestratorFunction:
+    handler: src/infra/functions/orquestrator/createOrquestratorFunction.handler
+    events:
+      - http:
+          path: orquestrator
+          method: POST
+          private: true
+          cors: false

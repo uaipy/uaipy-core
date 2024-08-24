@@ -13,7 +13,7 @@ export default class CheckUserExistenceUseCase implements CheckUserExistence {
     return user;
   }
   async checkByUuid(uuid: string): Promise<User> {
-    const user = await this.repository.getByEmail(uuid);
+    const user = await this.repository.getByUuid(uuid);
     if (!user) {
       throw ErrorCode.USER_NOT_FOUND_BY_UUID;
     }

@@ -10,11 +10,11 @@ import ErrorCode from "../utils/errors/error";
 import Token from "../domain/model/token";
 
 export default class AuthenticateUserUseCase implements AuthenticateUser {
-  constructor(private readonly userValidatinService: CheckUserExistence) {}
+  constructor(private readonly userValidationService: CheckUserExistence) {}
   async execute(params: AuthenticateUserInput): Promise<AuthenticateUserOutput> {
     this.checkEmail(params.email);
     this.checkPassword(params.password);
-    const user = await this.userValidatinService.checkByEmail(params.email);
+    const user = await this.userValidationService.checkByEmail(params.email);
     const isPasswordValid = Password.verifyHash(
       params.password,
       user.getPassword()
