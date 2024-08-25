@@ -5,8 +5,6 @@ import {
   Context,
   Handler,
 } from "aws-lambda";
-import { Pool } from "pg";
-import Environment from "../../../utils/environment";
 import PGUserDataSource from "../../../data/dataSources/pgUserDataSource";
 import CreateUserUseCase from "../../../service/createUser";
 import CreateUserController from "../../../presentation/createUserController";

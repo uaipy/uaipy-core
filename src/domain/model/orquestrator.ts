@@ -1,11 +1,10 @@
 import ErrorCode from "../../utils/errors/error";
 import { generateUuid } from "../../utils/uuid";
 
-export default class User {
+export default class Orquestrator {
   private name: string;
-  private email: string;
-  private password: string;
-  private details: string;
+  private userId: number;
+  private description: string;
   private uuid: string;
   private createdAt: Date;
   private updatedAt: Date;
@@ -15,9 +14,8 @@ export default class User {
 
   constructor(
     name: string,
-    email: string,
-    password: string,
-    details: string,
+    userId: number,
+    description: string,
     uuid: string,
     createdAt: Date,
     updatedAt: Date,
@@ -27,9 +25,8 @@ export default class User {
   ) {
     this.id = id;
     this.name = name;
-    this.email = email;
-    this.password = password;
-    this.details = details;
+    this.userId = userId;
+    this.description = description;
     this.uuid = uuid;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
@@ -39,16 +36,14 @@ export default class User {
 
   static create = (
     name: string,
-    email: string,
-    password: string,
-    details: string,
+    userId: number,
+    description: string,
     active: boolean
-  ): User => {
-    return new User(
+  ): Orquestrator => {
+    return new Orquestrator(
       name,
-      email,
-      password,
-      details,
+      userId,
+      description,
       generateUuid(),
       new Date(),
       new Date(),
@@ -59,7 +54,7 @@ export default class User {
   };
 
   public getId(): number {
-    if (!this.id) throw ErrorCode.USER_NOT_FOUND_BY_ID;
+    if (!this.id) throw ErrorCode.ORQUESTRATOR_NOT_FOUND_BY_UUID;
     return this.id;
   }
 
@@ -67,16 +62,12 @@ export default class User {
     return this.name;
   }
 
-  public getEmail(): string {
-    return this.email;
+  public getUserId(): number {
+    return this.userId;
   }
 
-  public getPassword(): string {
-    return this.password;
-  }
-
-  public getDetails(): string {
-    return this.details;
+  public getDescription(): string {
+    return this.description;
   }
 
   public getUuid(): string {

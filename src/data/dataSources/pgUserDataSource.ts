@@ -62,9 +62,25 @@ export default class PGUserDataSource implements UserDataSource {
     return this.adaptToDomain(dbResponse.rows[0]);
   }
 
+  async getByUuid(uuid: string): Promise<User> {
+    const dbResponse = await this.db.query(`select * from ${this.DB_TABLE} as u where u.uuid=$1;`,       [
+      uuid,
+    ]);
+    console.log(dbResponse.rows);
+    return this.adaptToDomain(dbResponse.rows[0]);
+  }
+
+  async getByEmail(email: string): Promise<User> {
+    const dbResponse = await this.db.query(`select * from ${this.DB_TABLE} as u where u.email=$1;`,       [
+      email,
+    ]);
+    console.log(dbResponse.rows);
+    return this.adaptToDomain(dbResponse.rows[0]);
+  }
+
   async getAll(): Promise<User[]> {
     const dbResponse = await this.db.query(`select * from ${this.DB_TABLE};`);
     console.log(dbResponse.rows);
-    return this.adaptBatchToDomain(dbResponse.rows);
+    return this.adaptBatchToDomain(dbResponse.rows[0]);
   }
 }
