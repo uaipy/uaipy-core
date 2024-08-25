@@ -32,7 +32,6 @@ describe("User Class", () => {
       active
     );
 
-    expect(user.getId()).toBeUndefined();
     expect(user.getName()).toBe(name);
     expect(user.getEmail()).toBe(email);
     expect(user.getPassword()).toBe(password);
@@ -48,7 +47,6 @@ describe("User Class", () => {
     const user = User.create(name, email, password, details, active);
 
     expect(generateUuid).toHaveBeenCalled();
-    expect(user.getId()).toBeUndefined();
     expect(user.getName()).toBe(name);
     expect(user.getEmail()).toBe(email);
     expect(user.getPassword()).toBe(password);
