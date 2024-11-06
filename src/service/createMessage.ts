@@ -1,44 +1,42 @@
-import Orquestrator from "../domain/model/orquestrator";
-import { CheckUserExistence } from "../domain/interfaces/useCases/user";
-import { OrquestratorDataSource } from "../data/interfaces/dataSources/orquestratorDataSource";
+import Message from "../domain/model/message";
+import { CheckDeviceExistence } from "../domain/interfaces/useCases/device";
+import { MessageDataSource } from "../data/interfaces/dataSources/messageDataSource";
 
 import {
-  CreateOrquestrator,
-  CreateOrquestratorInput,
-  CreateOrquestratorOutput,
-} from "../domain/interfaces/useCases/orquestrator";
+  CreateMessage,
+  CreateMessageInput,
+  CreateMessageOutput,
+} from "../domain/interfaces/useCases/message";
 
-export default class CreateOrquestratorUseCase implements CreateOrquestrator {
+export default class CreateMessageUseCase implements CreateMessage {
   constructor(
-    private readonly repository: OrquestratorDataSource,
-    private readonly userValidationService: CheckUserExistence
+    private readonly repository: MessageDataSource,
+    private readonly deviceValidationService: CheckDeviceExistence
   ) {}
-  async execute(
-    params: CreateOrquestratorInput
-  ): Promise<CreateOrquestratorOutput> {
-    const user = await this.userValidationService.checkByUuid(params.userUuid);
-    console.log(user)
-    const createdOrquestrator = await this.createOrquestrator(
-      params,
-      user.getId()
+  async execute(params: CreateMessageInput): Promise<CreateMessageOutput> {
+    const device = await this.deviceValidationService.checkByIntegrationCode(
+      params.deviceIntegrationCode
     );
-    console.log(createdOrquestrator);
+    console.log(device);
+    const createdMessage = await this.createMessage(params, device.getId());
+    console.log(createdMessage);
     return {
-      success: true,
-      message: "orquestrator created successfully",
+      id: createdMessage.getId(),
+      data: createdMessage.getData(),
+      localReadingDate: createdMessage.getLocalReadingDate(),
     };
   }
 
-  private async createOrquestrator(
-    params: CreateOrquestratorInput,
-    userId: number
-  ): Promise<Orquestrator> {
-    const orquestrator = Orquestrator.create(
-      params.name,
-      userId,
-      params.description,
-      false
+  private async createMessage(
+    params: CreateMessageInput,
+    deviceId: number
+  ): Promise<Message> {
+    const message = Message.create(
+      deviceId,
+      params.data,
+      params.localReadingDate,
+      true
     );
-    return this.repository.create(orquestrator);
+    return this.repository.create(message);
   }
 }

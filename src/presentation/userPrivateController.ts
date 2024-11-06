@@ -1,4 +1,4 @@
-import ErrorCode from "./../utils/errors/error";
+import ErrorCode from "../utils/errors/error";
 import Token, { UserTokenPayload } from "../domain/model/token";
 
 export default class UserPrivateController {

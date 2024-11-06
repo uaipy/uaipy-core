@@ -5,10 +5,10 @@ import ErrorCode from "../../utils/errors/error";
 export default class Token {
   constructor() {}
 
-  static sign(payload: UserTokenPayload): string {
+  static signUser(payload: UserTokenPayload): string {
     const environment = Environment.getValues();
     const options: SignOptions = {
-      expiresIn: environment.TOKEN_EXPIRATION || 3600,
+      expiresIn: environment.USER_TOKEN_EXPIRATION,
     };
     return jwt.sign(payload, environment.TOKEN_SECRET_KEY, options);
   }
@@ -29,7 +29,7 @@ export default class Token {
   static signOrquestrator(payload: OrquestratorTokenPayload): string {
     const environment = Environment.getValues();
     const options: SignOptions = {
-      expiresIn: environment.TOKEN_EXPIRATION,
+      expiresIn: environment.ORQUESTRATOR_TOKEN_EXPIRATION,
     };
     return jwt.sign(payload, environment.TOKEN_SECRET_KEY, options);
   }
@@ -54,6 +54,6 @@ export interface UserTokenPayload {
 }
 
 export interface OrquestratorTokenPayload {
-  userUuid: string;
   orquestratorUuid: string;
+  userUuid: string;
 }

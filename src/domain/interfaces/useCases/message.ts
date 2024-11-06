@@ -1,17 +1,16 @@
-export interface CreateMessageUseCase {
+export interface CreateMessage {
   execute(message: CreateMessageInput): Promise<CreateMessageOutput>;
 }
 
-export interface CreateMessageInput {
-  deviceId: number;
+export interface CreateMessageInput { 
+  deviceIntegrationCode: string;
   data: any;
-  messageReadDate: Date;
+  localReadingDate: Date;
 }
 
 export interface CreateMessageOutput {
   id: number;
-  deviceId: number;
   data: any;
-  messageReadDate: Date;
+  localReadingDate: Date;
 }
 

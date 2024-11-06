@@ -3,7 +3,7 @@ import ErrorCode from "../../utils/errors/error";
 export default class Message {
   private deviceId: number;
   private data: any;
-  private messageReadDate: Date;
+  private localReadingDate: Date;
   private createdAt: Date;
   private updatedAt: Date;
   private active: boolean;
@@ -13,7 +13,7 @@ export default class Message {
   constructor(
     deviceId: number,
     data: any,
-    messageReadDate: Date,
+    localReadingDate: Date,
     createdAt: Date,
     updatedAt: Date,
     active: boolean,
@@ -25,7 +25,7 @@ export default class Message {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.active = active;
-    this.messageReadDate = messageReadDate;
+    this.localReadingDate = localReadingDate;
     this.deletedAt = deletedAt;
     this.id = id;
   }
@@ -33,13 +33,13 @@ export default class Message {
   static create = (
     deviceId: number,
     data: any,
-    messageReadDate: Date,
+    localReadingDate: Date,
     active: boolean
   ): Message => {
     return new Message(
       deviceId,
       data,
-      messageReadDate,
+      localReadingDate,
       new Date(),
       new Date(),
       active,
@@ -61,8 +61,8 @@ export default class Message {
     return this.data;
   }
 
-  public getMessageReadDate(): Date {
-    return this.messageReadDate;
+  public getLocalReadingDate(): Date {
+    return this.localReadingDate;
   }
 
   public getCreatedAt(): Date {

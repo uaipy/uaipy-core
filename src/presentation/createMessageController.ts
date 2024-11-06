@@ -5,20 +5,20 @@ import {
 } from "aws-lambda";
 import Environment from "../utils/environment";
 import {
-  CreateOrquestrator,
-  CreateOrquestratorInput,
-} from "../domain/interfaces/useCases/orquestrator";
+  CreateMessage,
+  CreateMessageInput,
+} from "../domain/interfaces/useCases/message";
 import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
 import HttpHandler from "../utils/http";
 import ErrorCode from "../utils/errors/error";
-import UserPrivateController from "./userPrivateController";
+import OrquestratorPrivateController from "./orquestratorPrivateController";
 
-export default class CreateOrquestratorController
-  extends UserPrivateController
+export default class CreateMessageController
+  extends OrquestratorPrivateController
   implements Controller
 {
-  constructor(private readonly service: CreateOrquestrator) {
+  constructor(private readonly service: CreateMessage) {
     super();
   }
 
@@ -30,14 +30,14 @@ export default class CreateOrquestratorController
       const authData = this.validateAuthToken(
         event.headers.Authorization || ""
       );
-      const requestData: CreateOrquestratorInput = this.validateRequest(
+      console.log(authData);
+      const requestData: CreateMessageInput = this.validateRequest(
         JSON.parse(event.body || ""),
-        authData.userUuid
       );
-      const orquestrator = await this.service.execute(requestData);
+      const message = await this.service.execute(requestData);
       return HttpHandler.created({
         stage: Environment.getValues().NODE_ENV,
-        orquestrator,
+        message,
       });
     } catch (err: any) {
       console.error(err);
@@ -47,16 +47,18 @@ export default class CreateOrquestratorController
 
   private validateRequest(
     requestData: any,
-    userUuid: string
-  ): CreateOrquestratorInput {
-    const isValidRequest = requestData.name && requestData.description;
+  ): CreateMessageInput {
+    const isValidRequest =
+      requestData.integrationCode ||
+      requestData.data ||
+      requestData.messageReadDate;
     if (!isValidRequest) {
       throw ErrorCode.INVALID_REQUEST;
     }
     return {
-      name: requestData.name,
-      userUuid,
-      description: requestData.description,
+      deviceIntegrationCode: requestData.integrationCode,
+      data: requestData.data,
+      localReadingDate: requestData.messageReadDate,
     };
   }
 }

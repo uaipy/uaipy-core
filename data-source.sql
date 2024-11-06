@@ -33,6 +33,8 @@ CREATE TABLE
   tb_device (
     id SERIAL PRIMARY KEY,
     orquestrator_id INTEGER NOT NULL,
+    integration_code VARCHAR(100) UNIQUE NOT NULL,
+    uuid UUID NOT NULL,
     name VARCHAR(100) NOT NULL,
     type
       VARCHAR(100),

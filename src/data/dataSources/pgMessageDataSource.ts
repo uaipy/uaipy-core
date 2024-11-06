@@ -25,6 +25,21 @@ export default class PGMessageDataSource
     );
   };
 
+  private adaptBatchToDomain = (itens: any[]): Message[] =>
+    itens.map(
+      (item) =>
+        new Message(
+          item.deviceId,
+          item.data,
+          item.message_read_date,
+          item.created_at,
+          item.updated_at,
+          item.active,
+          item.deleted_at,
+          item.id
+        )
+    );
+
   async create(message: Message): Promise<Message> {
     const dbResponse = await this.db.query(
       `INSERT INTO tb_message (
@@ -35,7 +50,7 @@ export default class PGMessageDataSource
       [
         message.getDeviceId(),          
         message.getData(),             
-        message.getMessageReadDate(),   
+        message.getLocalReadingDate(),   
         message.getCreatedAt(),   
         message.getUpdatedAt(),    
         message.isActive()         
@@ -43,15 +58,19 @@ export default class PGMessageDataSource
     );
     return this.adaptToDomain(dbResponse.rows[0]);
   }
-  
-  
 
-  async getByUuid(uuid: string): Promise<Message> {
+  async getByDeviceId(id: number): Promise<Message[]> {
     const dbResponse = await this.db.query(
-      `select * from ${this.DB_TABLE} as u where u.uuid=$1;`,
-      [uuid]
+      `select * from ${this.DB_TABLE} as m where m.device_id=$1;`,
+      [id]
     );
     console.log(dbResponse.rows);
-    return this.adaptToDomain(dbResponse.rows[0]);
+    return this.adaptBatchToDomain(dbResponse.rows[0]);
+  }
+
+  async getAll(): Promise<Message[]> {
+    const dbResponse = await this.db.query(`select * from ${this.DB_TABLE};`);
+    console.log(dbResponse.rows);
+    return this.adaptBatchToDomain(dbResponse.rows[0]);
   }
 }
