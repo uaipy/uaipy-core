@@ -91,4 +91,4 @@ functions:
           path: message
           method: GET
           private: true
-          cors: false
+          cors: true

@@ -28,9 +28,9 @@ export default class GetMessageController implements Controller {
       );
       console.log("GET MESSAGE");
       const messages = await this.service.execute(requestData);
-      return HttpHandler.created({
-        messages: this.convertReadingsToBrasiliaTime(this.sortByDate(messages)),
-      });
+      return HttpHandler.ok(
+        this.convertReadingsToBrasiliaTime(this.sortByDate(messages))
+      );
     } catch (err: any) {
       console.error(err);
       return HttpHandler.handleError(err);
@@ -39,17 +39,24 @@ export default class GetMessageController implements Controller {
 
   private sortByDate(entries: GetMessageOutput[]): GetMessageOutput[] {
     return entries.sort((a, b) => {
-      return new Date(a.localReadingDate).getTime() - new Date(b.localReadingDate).getTime();
+      return (
+        new Date(a.localReadingDate).getTime() -
+        new Date(b.localReadingDate).getTime()
+      );
     });
   }
 
-  private convertReadingsToBrasiliaTime(readings: GetMessageOutput[]): GetMessageOutput[] {
+  private convertReadingsToBrasiliaTime(
+    readings: GetMessageOutput[]
+  ): GetMessageOutput[] {
     return readings.map((reading) => {
       const date = new Date(reading.localReadingDate);
 
-      const brasiliaDate = new Date(date.toLocaleString('en-US', {
-        timeZone: 'America/Sao_Paulo'
-      }));
+      const brasiliaDate = new Date(
+        date.toLocaleString("en-US", {
+          timeZone: "America/Sao_Paulo",
+        })
+      );
 
       return {
         id: reading.id,
