@@ -7,6 +7,7 @@ import Environment from "../utils/environment";
 import {
   GetMessage,
   GetMessageInput,
+  GetMessageOutput,
 } from "../domain/interfaces/useCases/message";
 import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
@@ -26,15 +27,36 @@ export default class GetMessageController implements Controller {
         event.queryStringParameters
       );
       console.log("GET MESSAGE");
-      const message = await this.service.execute(requestData);
+      const messages = await this.service.execute(requestData);
       return HttpHandler.created({
-        stage: Environment.getValues().NODE_ENV,
-        message,
+        messages: this.convertReadingsToBrasiliaTime(this.sortByDate(messages)),
       });
     } catch (err: any) {
       console.error(err);
       return HttpHandler.handleError(err);
     }
+  }
+
+  private sortByDate(entries: GetMessageOutput[]): GetMessageOutput[] {
+    return entries.sort((a, b) => {
+      return new Date(a.localReadingDate).getTime() - new Date(b.localReadingDate).getTime();
+    });
+  }
+
+  private convertReadingsToBrasiliaTime(readings: GetMessageOutput[]): GetMessageOutput[] {
+    return readings.map((reading) => {
+      const date = new Date(reading.localReadingDate);
+
+      const brasiliaDate = new Date(date.toLocaleString('en-US', {
+        timeZone: 'America/Sao_Paulo'
+      }));
+
+      return {
+        id: reading.id,
+        data: reading.data,
+        localReadingDate: brasiliaDate,
+      };
+    });
   }
 
   private validateRequest(requestData: any): GetMessageInput {
