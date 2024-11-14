@@ -46,7 +46,7 @@ functions:
           path: user
           method: POST
           private: true
-          cors: false
+          cors: true
 
   helloFunction:
     handler: src/infra/functions/helloFunction.handler
@@ -55,7 +55,7 @@ functions:
           private: true
           path: hello
           method: GET
-          cors: false
+          cors: true
           
   userAuthFunction:
     handler: src/infra/functions/userAuthFunction.handler
@@ -64,7 +64,7 @@ functions:
           path: user/auth
           method: POST
           private: true
-          cors: false
+          cors: true
 
   createOrquestratorFunction:
     handler: src/infra/functions/orquestrator/createOrquestratorFunction.handler
@@ -73,7 +73,7 @@ functions:
           path: orquestrator
           method: POST
           private: true
-          cors: false
+          cors: true
 
   createMessageFunction:
     handler: src/infra/functions/message/createMessageFunction.handler
@@ -82,7 +82,7 @@ functions:
           path: message/publish
           method: POST
           private: true
-          cors: false
+          cors: true
 
   getMessageFunction:
     handler: src/infra/functions/message/getMessageFunction.handler
