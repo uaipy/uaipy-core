@@ -14,3 +14,18 @@ export interface CreateMessageOutput {
   localReadingDate: Date;
 }
 
+
+export interface GetMessage {
+  execute(message: GetMessageInput): Promise<GetMessageOutput[]>;
+}
+
+export interface GetMessageInput { 
+  deviceIntegrationCode: string;
+}
+
+export interface GetMessageOutput {
+  id: number;
+  data: any;
+  localReadingDate: Date;
+}
+

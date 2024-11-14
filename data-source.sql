@@ -84,6 +84,29 @@ VALUES
     true
   );
 
+  INSERT INTO tb_device (
+    orquestrator_id,
+    integration_code,
+    uuid,
+    name,
+    type,
+    created_at,
+    updated_at,
+    deleted_at,
+    active
+) VALUES (
+    1, 
+    'INTG-001',
+    gen_random_uuid(), 
+    'Device Name',
+    'Sensor',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    NULL, 
+    TRUE 
+);
+
+
 select
   *
 from
@@ -103,3 +126,4 @@ drop table
 
 drop table
   "tb_message";
+

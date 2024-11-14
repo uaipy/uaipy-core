@@ -83,3 +83,12 @@ functions:
           method: POST
           private: true
           cors: false
+
+  getMessageFunction:
+    handler: src/infra/functions/message/getMessageFunction.handler
+    events:
+      - http:
+          path: message
+          method: GET
+          private: true
+          cors: false

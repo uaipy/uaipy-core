@@ -14,9 +14,9 @@ export default class PGMessageDataSource
 
   private adaptToDomain = (item: any): Message => {
     return new Message(
-      item.deviceId,
+      item.device_id,
       item.data,
-      item.message_read_date,
+      item.local_reading_date,
       item.created_at,
       item.updated_at,
       item.active,
@@ -29,9 +29,9 @@ export default class PGMessageDataSource
     itens.map(
       (item) =>
         new Message(
-          item.deviceId,
+          item.device_id,
           item.data,
-          item.message_read_date,
+          item.local_reading_date,
           item.created_at,
           item.updated_at,
           item.active,
@@ -61,16 +61,16 @@ export default class PGMessageDataSource
 
   async getByDeviceId(id: number): Promise<Message[]> {
     const dbResponse = await this.db.query(
-      `select * from ${this.DB_TABLE} as m where m.device_id=$1;`,
+      `select * from ${this.DB_TABLE} as m where m.device_id=$1 ORDER BY created_at DESC LIMIT 5;`,
       [id]
     );
     console.log(dbResponse.rows);
-    return this.adaptBatchToDomain(dbResponse.rows[0]);
+    return this.adaptBatchToDomain(dbResponse.rows);
   }
 
   async getAll(): Promise<Message[]> {
     const dbResponse = await this.db.query(`select * from ${this.DB_TABLE};`);
     console.log(dbResponse.rows);
-    return this.adaptBatchToDomain(dbResponse.rows[0]);
+    return this.adaptBatchToDomain(dbResponse.rows);
   }
 }
