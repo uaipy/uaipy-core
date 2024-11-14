@@ -1,8 +1,13 @@
-import Orquestrator from "src/domain/model/orquestrator";
+import Orquestrator from "../../model/orquestrator";
 
 export interface CreateOrquestrator {
   execute(params: CreateOrquestratorInput): Promise<CreateOrquestratorOutput>;
 }
+
+export interface CheckOrquestratorExistence {
+  checkByUuid(uuid: string): Promise<Orquestrator>;
+}
+
 
 export type CreateOrquestratorInput = {
   userUuid: string;

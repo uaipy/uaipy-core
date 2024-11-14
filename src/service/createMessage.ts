@@ -14,6 +14,7 @@ export default class CreateMessageUseCase implements CreateMessage {
     private readonly deviceValidationService: CheckDeviceExistence
   ) {}
   async execute(params: CreateMessageInput): Promise<CreateMessageOutput> {
+    console.log("CREATE MESSAGE SERVICE");
     const device = await this.deviceValidationService.checkByIntegrationCode(
       params.deviceIntegrationCode
     );

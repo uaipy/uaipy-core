@@ -27,13 +27,13 @@ export default class CreateMessageController
     _context: Context
   ): Promise<HttpResponse> {
     try {
-      const authData = this.validateAuthToken(
-        event.headers.Authorization || ""
-      );
-      console.log(authData);
+      // const authData = this.validateAuthToken(
+      //   event.headers.Authorization || ""
+      // );
       const requestData: CreateMessageInput = this.validateRequest(
-        JSON.parse(event.body || ""),
+        JSON.parse(event.body || "")
       );
+      console.log("CREATE MESSAGE");
       const message = await this.service.execute(requestData);
       return HttpHandler.created({
         stage: Environment.getValues().NODE_ENV,
@@ -45,9 +45,7 @@ export default class CreateMessageController
     }
   }
 
-  private validateRequest(
-    requestData: any,
-  ): CreateMessageInput {
+  private validateRequest(requestData: any): CreateMessageInput {
     const isValidRequest =
       requestData.integrationCode ||
       requestData.data ||

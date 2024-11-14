@@ -74,3 +74,12 @@ functions:
           method: POST
           private: true
           cors: false
+
+  createMessageFunction:
+    handler: src/infra/functions/message/createMessageFunction.handler
+    events:
+      - http:
+          path: message/publish
+          method: POST
+          private: true
+          cors: false
