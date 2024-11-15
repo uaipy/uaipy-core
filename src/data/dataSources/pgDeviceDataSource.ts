@@ -73,7 +73,7 @@ export default class PGDeviceDataSource implements DeviceDataSource {
 
   async getByIntegrationCode(integrationCode: string): Promise<Device> {
     try{
-      console.log("CHECK DEVICE GET BY INTEGRATION CODE");
+      console.log("CHECK DEVICE GET BY INTEGRATION CODE", integrationCode);
       const dbResponse = await this.db.query(`select * from ${this.DB_TABLE} as u where u.uuid=$1;`,       [
         integrationCode,
       ]);

@@ -27,18 +27,36 @@ export default class CreateMessageController
     _context: Context
   ): Promise<HttpResponse> {
     try {
-      // const authData = this.validateAuthToken(
-      //   event.headers.Authorization || ""
-      // );
-      const requestData: CreateMessageInput = this.validateRequest(
-        JSON.parse(event.body || "")
-      );
-      console.log("CREATE MESSAGE");
-      const message = await this.service.execute(requestData);
-      return HttpHandler.created({
-        stage: Environment.getValues().NODE_ENV,
-        message,
-      });
+      const requestData = JSON.parse(event.body || "");
+
+      if (Array.isArray(requestData)) {
+
+        const validatedRequests: CreateMessageInput[] = requestData.map((data) => this.validateRequest(data));
+
+        validatedRequests.sort(
+          (a, b) =>
+            new Date(a.localReadingDate).getTime() -
+            new Date(b.localReadingDate).getTime()
+        );
+
+        for (const validatedData of validatedRequests) {
+          await this.service.execute(validatedData);
+        }
+
+        return HttpHandler.created({
+          stage: Environment.getValues().NODE_ENV,
+          message: "Messages processed successfully",
+        });
+      } else {
+        const validatedRequest: CreateMessageInput =
+          this.validateRequest(requestData);
+        console.log("CREATE MESSAGE");
+        const message = await this.service.execute(validatedRequest);
+        return HttpHandler.created({
+          stage: Environment.getValues().NODE_ENV,
+          message,
+        });
+      }
     } catch (err: any) {
       console.error(err);
       return HttpHandler.handleError(err);
