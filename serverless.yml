@@ -14,20 +14,28 @@ provider:
     usagePlan:
       - device:
           quota:
-            limit: 5000
+            limit: 50000
             offset: 2
             period: MONTH
           throttle:
-            burstLimit: 200
-            rateLimit: 100
+            burstLimit: 2000
+            rateLimit: 1000
       - client:
           quota:
-            limit: 5000
+            limit: 50000
             offset: 2
             period: MONTH
           throttle:
-            burstLimit: 200
-            rateLimit: 100
+            burstLimit: 2000
+            rateLimit: 1000
+      - heroku:
+          quota:
+            limit: 50000
+            offset: 2
+            period: MONTH
+          throttle:
+            burstLimit: 2000
+            rateLimit: 1000
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
