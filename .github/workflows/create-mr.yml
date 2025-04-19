@@ -1,0 +1,38 @@
+name: Create Merge Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  create-mr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Merge Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'Automated MR: ${{ github.event.pull_request.title }}'
+          body: |
+            # Automated Merge Request
+
+            This MR was automatically created from PR #${{ github.event.pull_request.number }}.
+
+            ## Changes
+
+            ${{ github.event.pull_request.body }}
+
+            ## Checklist
+
+            - [ ] Code follows project standards
+            - [ ] Tests are implemented and pass
+            - [ ] Documentation is updated (if necessary)
+            - [ ] Commits follow project message standards
+          branch: 'automated-mr/${{ github.event.pull_request.number }}'
+          base: 'main'
+          labels: 'automated'
+          draft: false
+          delete-branch: true 
