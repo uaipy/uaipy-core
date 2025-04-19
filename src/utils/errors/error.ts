@@ -62,6 +62,6 @@ export default class ErrorCode {
   static ORQUESTRATOR_NOT_FOUND_BY_UUID: Error = new BaseError(
     ErrorType.BUSINESS,
     "ORQUESTRATOR-NOT-FOUND-004",
-    `the specified orqueestrator ID provided was not found`
+    `the specified orqueestrator uuid provided was not found`
   );
 }
