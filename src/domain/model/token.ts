@@ -8,7 +8,7 @@ export default class Token {
   static sign(payload: UserTokenPayload): string {
     const environment = Environment.getValues();
     const options: SignOptions = {
-      expiresIn: environment.TOKEN_EXPIRATION,
+      expiresIn: environment.TOKEN_EXPIRATION || 3600,
     };
     return jwt.sign(payload, environment.TOKEN_SECRET_KEY, options);
   }
