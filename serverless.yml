@@ -14,20 +14,28 @@ provider:
     usagePlan:
       - device:
           quota:
-            limit: 5000
+            limit: 50000
             offset: 2
             period: MONTH
           throttle:
-            burstLimit: 200
-            rateLimit: 100
+            burstLimit: 2000
+            rateLimit: 1000
       - client:
           quota:
-            limit: 5000
+            limit: 50000
             offset: 2
             period: MONTH
           throttle:
-            burstLimit: 200
-            rateLimit: 100
+            burstLimit: 2000
+            rateLimit: 1000
+      - heroku:
+          quota:
+            limit: 50000
+            offset: 2
+            period: MONTH
+          throttle:
+            burstLimit: 2000
+            rateLimit: 1000
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
@@ -46,7 +54,7 @@ functions:
           path: user
           method: POST
           private: true
-          cors: false
+          cors: true
 
   helloFunction:
     handler: src/infra/functions/helloFunction.handler
@@ -55,7 +63,7 @@ functions:
           private: true
           path: hello
           method: GET
-          cors: false
+          cors: true
           
   userAuthFunction:
     handler: src/infra/functions/userAuthFunction.handler
@@ -64,7 +72,7 @@ functions:
           path: user/auth
           method: POST
           private: true
-          cors: false
+          cors: true
 
   createOrquestratorFunction:
     handler: src/infra/functions/orquestrator/createOrquestratorFunction.handler
@@ -73,4 +81,22 @@ functions:
           path: orquestrator
           method: POST
           private: true
-          cors: false
+          cors: true
+
+  createMessageFunction:
+    handler: src/infra/functions/message/createMessageFunction.handler
+    events:
+      - http:
+          path: message/publish
+          method: POST
+          private: true
+          cors: true
+
+  getMessageFunction:
+    handler: src/infra/functions/message/getMessageFunction.handler
+    events:
+      - http:
+          path: message
+          method: GET
+          private: true
+          cors: true

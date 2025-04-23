@@ -12,7 +12,7 @@ import Controller from "../domain/interfaces/controller";
 import { HttpResponse } from "../domain/interfaces/http";
 import HttpHandler from "../utils/http";
 import ErrorCode from "../utils/errors/error";
-import UserPrivateController from "./privateController";
+import UserPrivateController from "./userPrivateController";
 
 export default class CreateOrquestratorController
   extends UserPrivateController

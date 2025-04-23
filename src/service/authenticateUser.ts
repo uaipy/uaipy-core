@@ -22,7 +22,7 @@ export default class AuthenticateUserUseCase implements AuthenticateUser {
     if (!isPasswordValid) {
       throw ErrorCode.INVALID_PASSWORD;
     }
-    const token = Token.sign({
+    const token = Token.signUser({
         userUuid: user.getUuid(),
         email: user.getEmail(),
       });

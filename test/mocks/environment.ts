@@ -8,5 +8,6 @@ export const mockEnvironment: EnvironmentValues = {
     "DB_PASSWORD": "your_db_password",
     "PASSWORD_SALT": 0,
     "TOKEN_SECRET_KEY": "your_token_secret_key",
-    "TOKEN_EXPIRATION": 3600
+    "USER_TOKEN_EXPIRATION": 3600,
+    "ORQUESTRATOR_TOKEN_EXPIRATION": 3600
 } 

@@ -64,4 +64,23 @@ export default class ErrorCode {
     "ORQUESTRATOR-NOT-FOUND-004",
     `the specified orqueestrator uuid provided was not found`
   );
+
+  static MESSAGE_NOT_FOUND_BY_ID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "MESSAGE-NOT-FOUND-001",
+    `the specified message ID provided was not found`
+  );
+
+  static DEVICE_NOT_FOUND_BY_ID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "DEVICE-NOT-FOUND-001",
+    `the specified device ID provided was not found`
+  );
+
+
+  static DEVICE_NOT_FOUND_BY_INTEGRATION_CODE: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "DEVICE-NOT-FOUND-002",
+    `the specified device integration code provided was not found`
+  );
 }

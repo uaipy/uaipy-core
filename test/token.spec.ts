@@ -20,8 +20,8 @@ describe("Token Class", () => {
     jest.restoreAllMocks();
   });
 
-  it("should sign a token correctly", () => {
-    const token = Token.sign(payload);
+  it("should signUser a token correctly", () => {
+    const token = Token.signUser(payload);
     expect(typeof token).toBe("string");
 
     // Decode the token to verify its contents
@@ -31,7 +31,7 @@ describe("Token Class", () => {
   });
 
   it("should verify a token correctly", () => {
-    const token = Token.sign(payload);
+    const token = Token.signUser(payload);
     const decoded = Token.verifyUser(token);
     expect(decoded.userUuid).toBe(payload.userUuid);
     expect(decoded.email).toBe(payload.email);
