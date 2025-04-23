@@ -6,6 +6,6 @@ export interface EnvironmentValues {
   DB_PASSWORD: string;
   PASSWORD_SALT: number;
   TOKEN_SECRET_KEY: string;
-  USER_TOKEN_EXPIRATION: string;
-  ORQUESTRATOR_TOKEN_EXPIRATION: string;
+  USER_TOKEN_EXPIRATION: number;
+  ORQUESTRATOR_TOKEN_EXPIRATION: number;
 }

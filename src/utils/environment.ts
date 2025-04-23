@@ -14,8 +14,8 @@ export default class Environment {
             DB_PASSWORD: env.get("DB_PASSWORD").asString() || '',
             PASSWORD_SALT: env.get("PASSWORD_SALT").asIntPositive() || 0,
             TOKEN_SECRET_KEY: env.get("TOKEN_SECRET_KEY").asString() || '',
-            USER_TOKEN_EXPIRATION: env.get("USER_TOKEN_EXPIRATION").asString() || '',
-            ORQUESTRATOR_TOKEN_EXPIRATION: env.get("ORQUESTRATOR_TOKEN_EXPIRATION").asString() || ''
+            USER_TOKEN_EXPIRATION: env.get("USER_TOKEN_EXPIRATION").asIntPositive() || 3600,
+            ORQUESTRATOR_TOKEN_EXPIRATION: env.get("ORQUESTRATOR_TOKEN_EXPIRATION").asIntPositive() || 3600
         }
     };
 }
