@@ -45,10 +45,10 @@ build:
 
 functions:
   getUsersFunction:
-    handler: src/infra/functions/user/getUsersFunction.handler
+    handler: src/main/factories/functions/user/getUsersFunction.handler
 
   createUserFunction:
-    handler: src/infra/functions/user/createUserFunction.handler
+    handler: src/main/factories/functions/user/createUserFunction.handler
     events:
       - http:
           path: user
