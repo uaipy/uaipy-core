@@ -1,18 +1,14 @@
 import {
   APIGatewayProxyEventV2,
   APIGatewayProxyResult,
-  APIGatewayProxyStructuredResultV2,
   Context,
   Handler,
 } from "aws-lambda";
-import PGUserDataSource from "../../../data/dataSources/pgUserDataSource";
 import CreateUserUseCase from "../../../service/createUser";
 import CreateUserController from "../../../presentation/createUserController";
-import { makeSQLDatabaseWrapper } from "../../../infra/factories/dataSourceFactory";
+import { makeUserDataSource } from "../../factories/data/dataSources";
 
-const db = makeSQLDatabaseWrapper();
-const repository = new PGUserDataSource(db);
-const service = new CreateUserUseCase(repository);
+const service = new CreateUserUseCase(makeUserDataSource());
 const controller = new CreateUserController(service);
 console.log("Create New Lambda");
 

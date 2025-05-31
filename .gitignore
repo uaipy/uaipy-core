@@ -2,6 +2,7 @@ node_modules
 .serverless
 config/environments/env.dev.json
 config/environments/env.local.json
-package-lock.json
+*-lock.json
+*-lock.yaml
 .build
 coverage/

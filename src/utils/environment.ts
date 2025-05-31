@@ -15,7 +15,11 @@ export default class Environment {
             PASSWORD_SALT: env.get("PASSWORD_SALT").asIntPositive() || 0,
             TOKEN_SECRET_KEY: env.get("TOKEN_SECRET_KEY").asString() || '',
             USER_TOKEN_EXPIRATION: env.get("USER_TOKEN_EXPIRATION").asIntPositive() || 3600,
-            ORQUESTRATOR_TOKEN_EXPIRATION: env.get("ORQUESTRATOR_TOKEN_EXPIRATION").asIntPositive() || 3600
+            ORQUESTRATOR_TOKEN_EXPIRATION: env.get("ORQUESTRATOR_TOKEN_EXPIRATION").asIntPositive() || 3600,
+            SQS_PERSIST_MESSAGE_QUEUE_URL: env.get("SQS_PERSIST_MESSAGE_QUEUE_URL").asString() || '',
+            SQS_REPORT_MESSAGE_QUEUE_URL: env.get("SQS_REPORT_MESSAGE_QUEUE_URL").asString() || '',
+            REPORTS_BUCKET_NAME: env.get("REPORTS_BUCKET_NAME").asString() || '',
+            RESEND_API_KEY: env.get("RESEND_API_KEY").asString() || ''
         }
     };
 }

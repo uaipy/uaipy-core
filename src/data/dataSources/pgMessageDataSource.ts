@@ -3,10 +3,10 @@ import { MessageDataSource } from "../interfaces/dataSources/messageDataSource";
 import { SQLDatabaseWrapper } from "../interfaces/sqlDatabaseWrapper";
 
 export default class PGMessageDataSource
-  implements MessageDataSource
+implements MessageDataSource
 {
   private db: SQLDatabaseWrapper;
-  private DB_TABLE = "public.tb_message";
+  private DB_TABLE = 'public.tb_message';
 
   constructor(db: SQLDatabaseWrapper) {
     this.db = db;
@@ -14,9 +14,8 @@ export default class PGMessageDataSource
 
   private adaptToDomain = (item: any): Message => {
     return new Message(
-      item.device_id,
+      item.orquestrator_id,
       item.data,
-      item.local_reading_date,
       item.created_at,
       item.updated_at,
       item.active,
@@ -29,9 +28,8 @@ export default class PGMessageDataSource
     itens.map(
       (item) =>
         new Message(
-          item.device_id,
+          item.orquestrator_id,
           item.data,
-          item.local_reading_date,
           item.created_at,
           item.updated_at,
           item.active,
@@ -48,9 +46,8 @@ export default class PGMessageDataSource
           DEFAULT, $1, $2, $3, $4, $5, $6
         ) RETURNING *;`,
       [
-        message.getDeviceId(),          
-        message.getData(),             
-        message.getLocalReadingDate(),   
+        message.getOrquestratorId(),          
+        message.getData(),               
         message.getCreatedAt(),   
         message.getUpdatedAt(),    
         message.isActive()         

@@ -4,5 +4,6 @@ export interface DeviceDataSource {
   create(contact: Device): Promise<Device>;
   getAll(): Promise<Device[]>;
   getByUuid(uuid: string): Promise<Device> 
-  getByIntegrationCode(integrationCode: string): Promise<Device> 
+  getByIntegrationCode(integrationCode: string): Promise<Device>
+  getById(id: number): Promise<Device>
 }

@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import Environment from "../../utils/environment";
+import Environment from "../../../../../utils/environment";
 import { SQLDatabaseWrapper } from "src/data/interfaces/sqlDatabaseWrapper";
 
 export const makeSQLDatabaseWrapper =  (): SQLDatabaseWrapper => {

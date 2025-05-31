@@ -1,31 +1,10 @@
-export interface CreateMessage {
-  execute(message: CreateMessageInput): Promise<CreateMessageOutput>;
+import { MessageInputType } from "src/domain/model/message";
+export interface PersistMessageQueue {
+  execute(message: {orquestratorId: number, data: MessageInputType}): Promise<void>;
 }
 
-export interface CreateMessageInput { 
-  deviceIntegrationCode: string;
-  data: any;
-  localReadingDate: Date;
+export interface ProcessReportQueue {
+  execute(deviceId: number, userEmail: string): Promise<void>;
 }
 
-export interface CreateMessageOutput {
-  id: number;
-  data: any;
-  localReadingDate: Date;
-}
-
-
-export interface GetMessage {
-  execute(message: GetMessageInput): Promise<GetMessageOutput[]>;
-}
-
-export interface GetMessageInput { 
-  deviceIntegrationCode: string;
-}
-
-export interface GetMessageOutput {
-  id: number;
-  data: any;
-  localReadingDate: Date;
-}
 
