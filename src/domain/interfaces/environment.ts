@@ -10,5 +10,6 @@ export interface EnvironmentValues {
   ORQUESTRATOR_TOKEN_EXPIRATION: number;
   SQS_PERSIST_MESSAGE_QUEUE_URL: string;
   SQS_REPORT_MESSAGE_QUEUE_URL: string;
+  REPORTS_BUCKET_NAME: string;
   RESEND_API_KEY: string;
 }

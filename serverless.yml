@@ -36,12 +36,34 @@ provider:
           throttle:
             burstLimit: 2000
             rateLimit: 1000
+  iam:
+    role: 
+      statements:
+        # SQS
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource: 
+            - !GetAtt GenerateReportQueue.Arn
+            - !GetAtt PersistMessageQueue.Arn
+        # S3
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:AbortMultipartUpload
+            - s3:GetObject
+          Resource:
+            - !GetAtt ReportsBucket.Arn
+            - !Join ['/', [!GetAtt ReportsBucket.Arn, '*']]
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
-
+package:
+  individually: true
 build:
   esbuild: false
+  exclude:
+      - '@aws-sdk/*'
 
 functions:
   getUsersFunction:
@@ -66,10 +88,19 @@ functions:
           cors: true
           
   userAuthFunction:
-    handler: src/infra/functions/userAuthFunction.handler
+    handler: src/infra/functions/auth/userAuthFunction.handler
     events:
       - http:
           path: user/auth
+          method: POST
+          private: true
+          cors: true
+
+  orquestratorAuthFunction:
+    handler: src/infra/functions/auth/orquestratorAuthFunction.handler
+    events:
+      - http:
+          path: orquestrator/auth
           method: POST
           private: true
           cors: true
@@ -83,20 +114,42 @@ functions:
           private: true
           cors: true
 
-  createMessageFunction:
-    handler: src/infra/functions/message/createMessageFunction.handler
+  generatePersistMessageFunction:
+    handler: src/infra/functions/http/message/generatePersistMessageFunction.handler
     events:
       - http:
-          path: message/publish
+          path: message/persist
           method: POST
           private: true
-          cors: true
 
-  getMessageFunction:
-    handler: src/infra/functions/message/getMessageFunction.handler
+  processPersistMessageQueue:
+    handler: src/infra/functions/queue/persistMessageQueueFunction.handler
+    timeout: 180
+    memorySize: 512
+    events:
+      - sqs:
+          arn: !GetAtt PersistMessageQueue.Arn
+          batchSize: 1
+
+  generateProcessReportFunction:
+    handler: src/infra/functions/http/message/generateProcessReportFunction.handler
     events:
       - http:
-          path: message
-          method: GET
+          path: message/process
+          method: POST
           private: true
-          cors: true
+
+  processProcessReportQueue:
+    handler: src/infra/functions/queue/processReportQueueFunction.handler
+    timeout: 180
+    memorySize: 512
+    events:
+      - sqs:
+          arn: !GetAtt GenerateReportQueue.Arn
+          batchSize: 1
+
+
+resources:
+  - ${file(resources/sqs/PersistMessageQueue.yml)}
+  - ${file(./resources/sqs/GenerateReportQueue.yml)}
+  - ${file(./resources/s3/ReportsBucket.yml)}
