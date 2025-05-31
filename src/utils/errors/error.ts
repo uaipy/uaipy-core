@@ -83,4 +83,16 @@ export default class ErrorCode {
     "DEVICE-NOT-FOUND-002",
     `the specified device integration code provided was not found`
   );
+
+  static MESSAGE_PERSIST_QUEUE_ERROR: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "MESSAGE-PERSIST-QUEUE-ERROR-001",
+    `Error on persist message on queue`
+  );
+  
+  static MESSAGE_NOT_FOUND_BY_DEVICE_ID: Error = new BaseError(
+    ErrorType.BUSINESS,
+    "MESSAGE-NOT-FOUND-002",
+    `the specified message device ID provided was not found`
+  );
 }
