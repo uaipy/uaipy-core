@@ -90,4 +90,12 @@ export default class PGDeviceDataSource implements DeviceDataSource {
     console.log(dbResponse.rows);
     return this.adaptBatchToDomain(dbResponse.rows[0]);
   }
+
+  async getById(id: number): Promise<Device> {
+    const dbResponse = await this.db.query(`select * from ${this.DB_TABLE} as u where u.id=$1;`,       [
+      id,
+    ]);
+    console.log(dbResponse.rows);
+    return this.adaptToDomain(dbResponse.rows[0]);
+  }
 }
